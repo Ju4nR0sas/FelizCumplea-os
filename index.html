@@ -146,7 +146,6 @@ h1{font-size:28px;line-height:1.15;margin-bottom:8px}
     <div><b id="cs">0</b><span>seg</span></div>
   </div>
   <p class="city" style="text-align:center;opacity:.7" id="countLabel">para despegar</p>
-  <a class="btn hidden" id="ticketBtn" target="_blank" rel="noopener">Ver mi tiquete</a>
   <p class="firma" id="firma"></p>
 </div></section>
 
@@ -309,7 +308,6 @@ function startFinal(){
   $('#date').textContent = f.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase();
   $('#time').textContent = f.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
   $('#firma').textContent = `Con amor, ${C.de} y Marcela ❤️`;
-  if (C.tiqueteUrl){ const t = $('#ticketBtn'); t.href = C.tiqueteUrl; t.classList.remove('hidden'); }
   type($('#msg'), C.mensaje);
   tick(); setInterval(tick, 1000);
 }
