@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Pase de abordar pendiente ✈️</title>
+<!-- Esto es lo que se ve en la vista previa de WhatsApp -->
+<meta property="og:title" content="✈️ Tienes un pase de abordar pendiente">
+<meta property="og:description" content="Pasajero: Papá · Destino: CLASIFICADO · Haz check-in antes de que cierre el vuelo">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--mar:#0b2545;--arena:#f7ecd8;--coral:#ff6b4a;--turq:#2ec4b6;--sol:#ffc857;--tinta:#1d1d1f}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Outfit',system-ui,sans-serif;background:radial-gradient(circle at 50% 0%,#1d4e89,var(--mar) 65%);color:#fff;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.screen{position:fixed;inset:0;display:flex;flex-direction:column;padding:24px 16px;opacity:0;pointer-events:none;transform:translateY(24px);transition:opacity .6s,transform .6s;overflow-y:auto}
+.screen.active{opacity:1;pointer-events:auto;transform:none}
+.wrap{width:100%;max-width:420px;margin:auto}
+h1{font-size:28px;line-height:1.15;margin-bottom:8px}
+.sub{opacity:.8;margin-bottom:22px;line-height:1.4}
+.mono{font-family:'Space Mono',monospace}
+.hidden{display:none!important}
+
+/* Pase de abordar */
+.pass{background:var(--arena);color:var(--tinta);border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.pass-top{background:var(--coral);color:#fff;padding:12px 18px;display:flex;justify-content:space-between;font:700 12px 'Space Mono',monospace;letter-spacing:.12em}
+.route{display:flex;align-items:center;gap:10px;padding:22px 18px 6px}
+.end{text-align:center;min-width:84px}
+.code{font:700 42px 'Space Mono',monospace;line-height:1}
+.city{font-size:12px;opacity:.65;margin-top:4px}
+.line{flex:1;border-top:2px dashed #b9a987;position:relative;height:0}
+.line span{position:absolute;left:50%;top:-15px;transform:translateX(-50%);font-size:22px;animation:fly 2.4s ease-in-out infinite}
+@keyframes fly{0%,100%{transform:translate(-80%,0)}50%{transform:translate(-20%,-4px)}}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:16px 18px 18px}
+.label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;opacity:.55}
+.val{font:700 15px 'Space Mono',monospace;margin-top:2px}
+.tear{border-top:2px dashed #cbbd9f;margin:0 14px}
+.barcode{height:54px;margin:16px 18px 18px;background:repeating-linear-gradient(90deg,var(--tinta) 0 2px,transparent 2px 4px,var(--tinta) 4px 7px,transparent 7px 9px,var(--tinta) 9px 10px,transparent 10px 13px)}
+.secret{color:var(--coral)}
+
+.btn{display:block;width:100%;padding:16px;border:0;border-radius:14px;background:var(--sol);color:var(--tinta);font:800 17px 'Outfit',sans-serif;margin-top:22px;cursor:pointer;box-shadow:0 6px 0 #c9962a;text-decoration:none;text-align:center}
+.btn:active{transform:translateY(3px);box-shadow:0 3px 0 #c9962a}
+
+/* Quiz */
+.letters{display:flex;gap:10px;justify-content:center;margin:6px 0 24px}
+.letter{width:58px;height:70px;border-radius:12px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.25);display:grid;place-items:center;font:700 34px 'Space Mono',monospace;transition:.4s}
+.letter.on{background:var(--sol);color:var(--tinta);border-color:var(--sol);transform:rotateY(360deg)}
+.qnum{font:700 12px 'Space Mono',monospace;letter-spacing:.14em;opacity:.7;text-transform:uppercase}
+.qtext{font-size:22px;font-weight:600;margin:8px 0 18px;line-height:1.25}
+.opt{display:block;width:100%;text-align:left;padding:15px 16px;margin-bottom:10px;border-radius:12px;border:2px solid rgba(255,255,255,.2);background:rgba(255,255,255,.07);color:#fff;font:600 16px 'Outfit',sans-serif;cursor:pointer;transition:.2s}
+.opt.ok{background:var(--turq);border-color:var(--turq);color:var(--tinta)}
+.opt.bad{border-color:var(--coral);animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-8px)}50%{transform:translateX(8px)}75%{transform:translateX(-4px)}}
+.fb{min-height:24px;margin-top:6px;font-weight:600}
+
+/* Raspa y gana */
+.scratch{position:relative;width:100%;aspect-ratio:4/3;border-radius:18px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.45);background:linear-gradient(180deg,#ffb86b 0%,#ff7e5f 48%,var(--turq) 48%,#127c86 100%)}
+.sun{position:absolute;left:50%;top:28%;width:90px;height:90px;margin-left:-45px;border-radius:50%;background:#ffe08a;box-shadow:0 0 50px #ffe08a}
+.dest{position:absolute;inset:auto 0 12% 0;text-align:center;color:#fff;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+.dest b{display:block;font-size:40px;font-weight:800;letter-spacing:.02em}
+.dest small{font:700 13px 'Space Mono',monospace;letter-spacing:.2em}
+#scratch{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:pointer}
+
+/* Final */
+.msg{white-space:pre-line;line-height:1.55;font-size:17px;margin:14px 0 22px;min-height:120px}
+.count{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:22px 0 6px}
+.count div{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 4px;text-align:center}
+.count b{display:block;font:700 26px 'Space Mono',monospace}
+.count span{font-size:11px;opacity:.7;text-transform:uppercase;letter-spacing:.08em}
+.firma{text-align:center;opacity:.75;margin-top:20px;font-size:14px}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:50}
+</style>
+</head>
+<body>
+
+<!-- 1. Pase misterioso -->
+<section class="screen active" id="s1"><div class="wrap">
+  <h1>Tienes un vuelo pendiente ✈️</h1>
+  <p class="sub">La aerolínea necesita verificar tu identidad antes de revelar el destino.</p>
+  <div class="pass">
+    <div class="pass-top"><span>BOARDING PASS</span><span id="flightCode"></span></div>
+    <div class="route">
+      <div class="end"><div class="code" id="o1"></div><div class="city" id="oc1"></div></div>
+      <div class="line"><span>✈️</span></div>
+      <div class="end"><div class="code secret">???</div><div class="city">Clasificado</div></div>
+    </div>
+    <div class="fields">
+      <div><div class="label">Pasajero</div><div class="val" id="pax1"></div></div>
+      <div><div class="label">Asiento</div><div class="val">-- · ECONOMICO</div></div>
+      <div><div class="label">Puerta</div><div class="val">CUMPLE</div></div>
+      <div><div class="label">Fecha</div><div class="val secret">SORPRESA</div></div>
+    </div>
+    <div class="tear"></div>
+    <div class="barcode"></div>
+  </div>
+  <button class="btn" onclick="go('#s2')">Hacer check-in</button>
+</div></section>
+
+<!-- 2. Verificación (quiz) -->
+<section class="screen" id="s2"><div class="wrap">
+  <p class="qnum" style="text-align:center;margin-bottom:10px">Código de destino</p>
+  <div class="letters" id="letters"></div>
+  <p class="qnum" id="qnum"></p>
+  <p class="qtext" id="qtext"></p>
+  <div id="opts"></div>
+  <p class="fb" id="fb"></p>
+</div></section>
+
+<!-- 3. Raspa para revelar -->
+<section class="screen" id="s3"><div class="wrap">
+  <h1>Última verificación 🔐</h1>
+  <p class="sub">Raspa la tarjeta con el dedo para descubrir tu destino.</p>
+  <div class="scratch">
+    <div class="sun"></div>
+    <div class="dest"><small id="dcode"></small><b id="dcity"></b></div>
+    <canvas id="scratch"></canvas>
+  </div>
+  <button class="btn hidden" id="toGift" onclick="go('#s4',startFinal)">Abrir mi regalo 🎁</button>
+</div></section>
+
+<!-- 4. Mensaje + tiquete -->
+<section class="screen" id="s4"><div class="wrap">
+  <h1 id="title4"></h1>
+  <p class="msg" id="msg"></p>
+  <div class="pass">
+    <div class="pass-top"><span id="airline"></span><span id="flightCode2"></span></div>
+    <div class="route">
+      <div class="end"><div class="code" id="o2"></div><div class="city" id="oc2"></div></div>
+      <div class="line"><span>✈️</span></div>
+      <div class="end"><div class="code" id="d2"></div><div class="city" id="dc2"></div></div>
+    </div>
+    <div class="fields">
+      <div><div class="label">Pasajero(s)</div><div class="val" id="pax2"></div></div>
+      <div><div class="label">Vuelo</div><div class="val" id="flightNo"></div></div>
+      <div><div class="label">Fecha</div><div class="val" id="date"></div></div>
+      <div><div class="label">Hora</div><div class="val" id="time"></div></div>
+    </div>
+    <div class="tear"></div>
+    <div class="barcode"></div>
+  </div>
+  <div class="count" id="count">
+    <div><b id="cd">0</b><span>días</span></div>
+    <div><b id="ch">0</b><span>horas</span></div>
+    <div><b id="cm">0</b><span>min</span></div>
+    <div><b id="cs">0</b><span>seg</span></div>
+  </div>
+  <p class="city" style="text-align:center;opacity:.7" id="countLabel">para despegar</p>
+  <a class="btn hidden" id="ticketBtn" target="_blank" rel="noopener">Ver mi tiquete</a>
+  <p class="firma" id="firma"></p>
+</div></section>
+
+<canvas id="confetti"></canvas>
+
+<script>
+/* =========================================================
+   ✏️  EDITA SOLO ESTA PARTE
+   ========================================================= */
+const CONFIG = {
+  nombre: "Andrés Rosas",                 // cómo le dices
+  de: "Juan",                     // quién firma
+  edad: 43,
+  origen:  { codigo: "BOG", ciudad: "Bogotá" },
+  destino: { codigo: "SMR", ciudad: "Santa Marta" },
+  fechaVuelo: "2026-11-06T18:10:00-05:00",   // fecha y hora del vuelo
+  aerolinea: "LATAM",
+  numeroVuelo: "LA4180",
+  pasajeros: "Papá",
+  tiqueteUrl: "https://www.latamairlines.com/co/es/boarding-pass?orderId=LA0357572LBVA&lastName=ROSAS+GUERRERO&tripPassengerId=ADT_4&segmentIndex=0&itineraryId=1",                 // opcional: link al tiquete. Ver advertencia abajo.
+  preguntas: [
+    { pregunta: "¿Quién es tu hijo favorito?",
+      opciones: ["Juan", "Juan", "Definitivamente Juan"],
+      correcta: [0,1,2],
+      siAcierta: "✅ Respuesta correcta. Siempre lo supimos." },
+    { pregunta: "¿Cuántos años cumples hoy?",
+      opciones: ["39, y me veo de 35", "43", "Prefiero no hablar de eso"],
+      correcta: 1,
+      siAcierta: "✅ Verificado. Estás como un vino.",
+      siFalla: "❌ El sistema detectó una pequeña mentira 😏" },
+    { pregunta: "¿Qué es lo que más necesitas en este momento?",
+      opciones: ["Otra reunión de trabajo", "Unas vacaciones frente al mar", "Revisar el correo"],
+      correcta: 1,
+      siAcierta: "✅ Justo lo que dijo el sistema.",
+      siFalla: "❌ Respuesta rechazada. Piénsalo mejor 🌊" }
+  ],
+  mensaje:
+`Hoy cumples 43 y queríamos regalarte algo que no cupiera en una caja.
+
+Gracias por todo lo que haces por nosotros, casi siempre sin pedir nada a cambio. Esta vez te toca a ti descansar: mar, sol y cero preocupaciones.
+
+Te queremos mucho.`
+};
+/* ========================================================= */
+
+const $ = s => document.querySelector(s);
+const vib = p => { try { navigator.vibrate && navigator.vibrate(p); } catch(e){} };
+
+function go(id, cb){
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  $(id).classList.add('active');
+  if (cb) setTimeout(cb, 80);
+}
+
+/* Relleno inicial */
+const C = CONFIG;
+$('#flightCode').textContent = $('#flightCode2').textContent = 'CUMPLE-' + C.edad;
+$('#o1').textContent = $('#o2').textContent = C.origen.codigo;
+$('#oc1').textContent = $('#oc2').textContent = C.origen.ciudad;
+$('#pax1').textContent = C.nombre.toUpperCase();
+$('#dcode').textContent = C.destino.codigo + ' · TU DESTINO';
+$('#dcity').textContent = C.destino.ciudad;
+
+/* Quiz */
+const letters = $('#letters');
+[...C.destino.codigo].forEach(() => {
+  const d = document.createElement('div'); d.className = 'letter'; d.textContent = '?'; letters.appendChild(d);
+});
+let q = 0;
+function revealLetters(){
+  const n = C.preguntas.length, len = C.destino.codigo.length;
+  const upto = Math.round((q + 1) * len / n);
+  [...letters.children].forEach((el, i) => {
+    if (i < upto && !el.classList.contains('on')) { el.textContent = C.destino.codigo[i]; el.classList.add('on'); }
+  });
+}
+function renderQ(){
+  const p = C.preguntas[q];
+  $('#qnum').textContent = `Verificación ${q+1} de ${C.preguntas.length}`;
+  $('#qtext').textContent = p.pregunta;
+  $('#fb').textContent = '';
+  const box = $('#opts'); box.innerHTML = '';
+  p.opciones.forEach((o, i) => {
+    const b = document.createElement('button');
+    b.className = 'opt'; b.textContent = o;
+    b.onclick = () => answer(i, b);
+    box.appendChild(b);
+  });
+}
+function answer(i, b){
+  const p = C.preguntas[q];
+  const ok = Array.isArray(p.correcta) ? p.correcta.includes(i) : p.correcta === i;
+  if (ok){
+    b.classList.add('ok');
+    $('#fb').textContent = p.siAcierta || '✅ Verificado';
+    revealLetters(); vib(60);
+    document.querySelectorAll('.opt').forEach(x => x.disabled = true);
+    setTimeout(() => { q++; q < C.preguntas.length ? renderQ() : go('#s3', initScratch); }, 1400);
+  } else {
+    b.classList.add('bad');
+    $('#fb').textContent = p.siFalla || '❌ Respuesta no válida, intenta de nuevo';
+    vib([30,40,30]);
+    setTimeout(() => b.classList.remove('bad'), 450);
+  }
+}
+renderQ();
+
+/* Raspa y gana */
+let scratchReady = false;
+function initScratch(){
+  if (scratchReady) return; scratchReady = true;
+  const c = $('#scratch'), r = c.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  c.width = r.width * dpr; c.height = r.height * dpr;
+  const x = c.getContext('2d'); x.scale(dpr, dpr);
+  const g = x.createLinearGradient(0, 0, r.width, r.height);
+  g.addColorStop(0, '#bfbfbf'); g.addColorStop(.5, '#f2f2f2'); g.addColorStop(1, '#a6a6a6');
+  x.fillStyle = g; x.fillRect(0, 0, r.width, r.height);
+  x.fillStyle = '#555'; x.textAlign = 'center';
+  x.font = '800 22px Outfit, sans-serif'; x.fillText('RASPA AQUÍ 👆', r.width/2, r.height/2);
+  x.font = '400 13px Outfit, sans-serif'; x.fillText('con el dedo', r.width/2, r.height/2 + 24);
+  x.globalCompositeOperation = 'destination-out';
+  x.lineWidth = 44; x.lineCap = 'round'; x.lineJoin = 'round';
+
+  let down = false, last = null, done = false, moves = 0;
+  const pt = e => { const b = c.getBoundingClientRect(); return { x: e.clientX - b.left, y: e.clientY - b.top }; };
+  function draw(p){
+    const from = last || { x: p.x - 0.1, y: p.y };
+    x.beginPath(); x.moveTo(from.x, from.y); x.lineTo(p.x, p.y); x.stroke();
+    last = p; if (++moves % 10 === 0) check();
+  }
+  function check(){
+    if (done) return;
+    const d = x.getImageData(0, 0, c.width, c.height).data;
+    let clear = 0, tot = 0;
+    for (let i = 3; i < d.length; i += 4 * 40){ tot++; if (d[i] === 0) clear++; }
+    if (clear / tot > 0.5) reveal();
+  }
+  function reveal(){
+    done = true;
+    c.style.transition = 'opacity .8s'; c.style.opacity = 0;
+    setTimeout(() => c.remove(), 800);
+    confetti(); vib([120,60,220]);
+    $('#toGift').classList.remove('hidden');
+  }
+  c.addEventListener('pointerdown', e => { down = true; last = null; c.setPointerCapture(e.pointerId); draw(pt(e)); });
+  c.addEventListener('pointermove', e => { if (down) draw(pt(e)); });
+  ['pointerup','pointercancel'].forEach(t => c.addEventListener(t, () => { down = false; last = null; check(); }));
+}
+
+/* Final */
+function startFinal(){
+  confetti();
+  $('#title4').textContent = `¡Feliz cumpleaños, ${C.nombre}! 🎂`;
+  $('#airline').textContent = C.aerolinea.toUpperCase();
+  $('#d2').textContent = C.destino.codigo;
+  $('#dc2').textContent = C.destino.ciudad;
+  $('#pax2').textContent = C.pasajeros.toUpperCase();
+  $('#flightNo').textContent = C.numeroVuelo;
+  const f = new Date(C.fechaVuelo);
+  $('#date').textContent = f.toLocaleDateString('es-CO', { day: 'numeric', month: 'short', year: 'numeric' }).toUpperCase();
+  $('#time').textContent = f.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+  $('#firma').textContent = `Con amor, ${C.de} y Marcela ❤️`;
+  if (C.tiqueteUrl){ const t = $('#ticketBtn'); t.href = C.tiqueteUrl; t.classList.remove('hidden'); }
+  type($('#msg'), C.mensaje);
+  tick(); setInterval(tick, 1000);
+}
+function type(el, text, speed = 26){
+  el.textContent = ''; let i = 0;
+  const iv = setInterval(() => { el.textContent += text[i++]; if (i >= text.length) clearInterval(iv); }, speed);
+}
+function tick(){
+  let s = Math.max(0, Math.floor((new Date(C.fechaVuelo) - new Date()) / 1000));
+  if (s === 0){ $('#count').classList.add('hidden'); $('#countLabel').textContent = '¡Hoy se vuela! 🌴'; return; }
+  $('#cd').textContent = Math.floor(s / 86400); s %= 86400;
+  $('#ch').textContent = Math.floor(s / 3600);  s %= 3600;
+  $('#cm').textContent = Math.floor(s / 60);
+  $('#cs').textContent = s % 60;
+}
+
+/* Confeti */
+function confetti(){
+  const cv = $('#confetti'), x = cv.getContext('2d');
+  cv.width = innerWidth; cv.height = innerHeight;
+  const cols = ['#ffc857','#ff6b4a','#2ec4b6','#ffffff','#7bdff2'];
+  const ps = Array.from({ length: 170 }, () => ({
+    x: innerWidth / 2, y: innerHeight * .45,
+    vx: (Math.random() - .5) * 15, vy: -Math.random() * 16 - 4,
+    s: Math.random() * 8 + 5, c: cols[Math.random() * cols.length | 0],
+    r: Math.random() * 6, vr: (Math.random() - .5) * .3
+  }));
+  let t = 0;
+  (function f(){
+    x.clearRect(0, 0, cv.width, cv.height);
+    ps.forEach(p => {
+      p.vy += .42; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.r += p.vr;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.r); x.fillStyle = p.c;
+      x.fillRect(-p.s/2, -p.s/4, p.s, p.s/2); x.restore();
+    });
+    if (++t < 230) requestAnimationFrame(f); else x.clearRect(0, 0, cv.width, cv.height);
+  })();
+}
+</script>
+</body>
